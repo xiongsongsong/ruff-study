@@ -19,11 +19,12 @@ var methods = {
   },
   saveData: function (req, res, url) {
     var params = querystring.parse(req.url.replace(/^.+\?/, ''))
-    fs.appendFile(__dirname + '/ir.txt', decodeURIComponent(params.name) + ' | ' + params.data + '\r\n', function (err) {
-      if (err) throw err;
-      res.end()
-      console.log('The "data to append" was appended to file!');
-    });
+    fs.appendFile(__dirname + '/ir.txt',
+      decodeURIComponent(params.name) + ' | ' + params.data + '\r\n', function (err) {
+        if (err) throw err;
+        res.end()
+        console.log('The "data to append" was appended to file!');
+      });
   },
   // 处理静态数据
   static: function (req, res, url) {
