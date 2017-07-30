@@ -1,0 +1,13 @@
+{
+    "mapping": {
+        "button/vcc": "ruff-mbd-v1/vdd-0",
+        "button/gnd": "ruff-mbd-v1/gnd-0",
+        "button/gpio": "ruff-mbd-v1/gpio-11",
+        "light/vcc": "ruff-mbd-v1/vdd-1",
+        "light/gnd": "ruff-mbd-v1/gnd-1",
+        "light/i2c": "ruff-mbd-v1/i2c-0",
+        "buzzing/vcc": "ruff-mbd-v1/vdd-2",
+        "buzzing/gnd": "ruff-mbd-v1/gnd-2",
+        "buzzing/gpio": "ruff-mbd-v1/gpio-12"
+    }
+}

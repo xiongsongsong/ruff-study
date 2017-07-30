@@ -1,0 +1,18 @@
+{
+  "devices": [
+    {
+      "id": "buzzer",
+      "model": "FC-49",
+      "driver": "buzzer-gpio",
+      "inputs": {
+        "gpio": {
+          "type": "gpio",
+          "args": {
+            "direction": "out",
+            "level": "high"
+          }
+        }
+      }
+    }
+  ]
+}

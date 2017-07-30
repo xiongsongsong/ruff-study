@@ -1,0 +1,13 @@
+{
+  "name": "hello-ruff",
+  "version": "0.1.0",
+  "description": "",
+  "author": "",
+  "main": "src/index.js",
+  "ruff": {
+    "dependencies": {
+      "buzzer-gpio": "^0.2.4"
+    },
+    "version": 1
+  }
+}
