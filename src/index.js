@@ -1,3 +1,5 @@
 $.ready(function () {
-  $('#buzzer').turnOn()
+  $('#IR_RECEIVER').on('data', function (data) {
+    console.log('received data', data);
+  })
 })

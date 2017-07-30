@@ -1,0 +1,21 @@
+{
+    "featureVersion": "0.1",
+    "models": [
+        "CK002"
+    ],
+    "inputs": {
+        "gpio": {
+            "type": "gpio",
+            "args": {
+                "direction": "in",
+                "edge": "both"
+            },
+            "features": {
+                "input": [
+                    "read",
+                    "interrupt"
+                ]
+            }
+        }
+    }
+}
