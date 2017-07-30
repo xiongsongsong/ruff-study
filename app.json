@@ -1,18 +1,15 @@
 {
-  "devices": [
-    {
-      "id": "buzzer",
-      "model": "FC-49",
-      "driver": "buzzer-gpio",
-      "inputs": {
-        "gpio": {
-          "type": "gpio",
-          "args": {
-            "direction": "out",
-            "level": "high"
-          }
+    "devices": [
+        {
+            "id": "IR_RECEIVER",
+            "model": "IRR-01",
+            "driver": "ruff-v1-infrared-receiver",
+            "inputs": {
+                "gpio": {
+                    "type": "gpio",
+                    "reserve": "gpio-11/gpio"
+                }
+            }
         }
-      }
-    }
-  ]
+    ]
 }
