@@ -1,0 +1,139 @@
+<!Doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <script src="vue.min.js"></script>
+  <script src="element-ui/index.js"></script>
+  <script src="axios.min.js"></script>
+  <link rel="stylesheet" href="index.css">
+  <title>Document</title>
+  <style>
+    h1 {
+      text-align: center;
+    }
+
+    body {
+      font-family: "PingFang SC", "Microsoft yahei", sans-serif;
+    }
+
+    a[download] {
+      color: #1c8de0;
+      margin-left: 1em;
+    }
+
+  </style>
+</head>
+<body>
+<div id="app">
+  <h1>遥控器录制工具</h1>
+
+  <el-button type="primary" @click="add">录制新按钮</el-button>
+
+  <a href="/ir.txt" download="红外数据配置.txt">下载数据</a>
+
+  <hr>
+
+  <pre>{{ir}}</pre>
+
+  <el-dialog :visible.sync="visible" size="tiny">
+    <el-form :form="form">
+      <el-form-item label="红外名称">
+        <el-input v-model="form.name"></el-input>
+      </el-form-item>
+      <el-form-item label="请按遥控器">
+        <el-input v-model="form.data" readonly placeholder="对准红外接收装置并按遥控器，1~2秒后数据会同步至此"></el-input>
+      </el-form-item>
+      <div>
+        <el-button @click="submit">提交</el-button>
+      </div>
+    </el-form>
+  </el-dialog>
+</div>
+
+<script>
+
+  var irForm = {
+    name: '未命名',
+    data: ''
+  }
+  new Vue({
+    el: '#app',
+    data: function () {
+      return {
+        form: Object.assign({}, irForm),
+        visible: true,
+        ir: '',
+        // 服务器接收到的最新的红外数据
+        latestIRData: []
+      }
+    },
+    methods: {
+      add: function () {
+        this.visible = true
+      },
+      submit: function () {
+        var self = this
+        if (this.form.name.trim().length < 1) {
+          this.$message.error('请填写按钮名称')
+          return
+        }
+        if (this.form.data.trim().length < 1) {
+          this.$message.error('还未收到红外数据')
+          return
+        }
+        axios.get('/saveData', {
+          params: {
+            name: encodeURIComponent(this.form.name),
+            data: this.form.data
+          }
+        }).then(function (res) {
+          self.visible = false
+          self.getIr()
+        }).catch(function (e) {
+          self.visible = false
+          self.getIr()
+        })
+      },
+      // 获取服务器最新的红外数据
+      getIrData: function () {
+        var self = this
+        axios.get('/irData').then(function (res) {
+          setTimeout(function () {
+            self.getIrData();
+          }, 1000)
+          if (Array.isArray(res.data) && res.data.length > 0) {
+            self.form.data = res.data.join(',')
+          }
+        }).catch(function (e) {
+          setTimeout(function () {
+            self.getIrData();
+          }, 1000)
+        })
+      },
+      // 获取红外配置数据
+      getIr: function () {
+        var self = this
+        axios.get('/ir.txt').then(function (res) {
+          self.ir = res.data
+        }).catch(function (e) {
+          console.log(e)
+        })
+      }
+    },
+    watch: {
+      visible: function () {
+        if (!this.visible) {
+          this.form = Object.assign({}, irForm)
+        }
+      }
+    },
+    mounted: function () {
+      this.getIrData()
+      this.getIr()
+    }
+  })
+</script>
+</body>
+</html>

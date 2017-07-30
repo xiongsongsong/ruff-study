@@ -1,13 +1,14 @@
 {
-    "name": "hello-ruff",
-    "version": "0.1.0",
-    "description": "",
-    "author": "",
-    "main": "src/index.js",
-    "ruff": {
-        "dependencies": {
-            "ruff-v1-infrared-receiver": "^0.3.7"
-        },
-        "version": 1
-    }
+  "name": "hello-ruff",
+  "version": "0.1.0",
+  "description": "",
+  "author": "",
+  "main": "src/index.js",
+  "ruff": {
+    "dependencies": {
+      "ruff-v1-infrared-receiver": "^0.3.7",
+      "ruff-v1-infrared-sender": "^0.3.7"
+    },
+    "version": 1
+  }
 }
