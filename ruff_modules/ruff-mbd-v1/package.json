@@ -1,0 +1,33 @@
+{
+  "name": "ruff-mbd-v1",
+  "version": "4.2.10",
+  "description": "Ruff Main Board V1 Metadata",
+  "author": "Nanchao Inc.",
+  "ruff": {
+    "session-format": {
+      "address": {
+        "type": "string",
+        "description": "designate IP address",
+        "required": true,
+        "visible": true
+      },
+      "token": {
+        "type": "string",
+        "description": "designate token",
+        "required": false,
+        "visible": false
+      }
+    },
+    "dependencies": {
+      "led-gpio": "^3.0.0",
+      "button-gpio": "^2.0.0",
+      "pca9685": "^2.0.0",
+      "ltc2309": "^3.0.0",
+      "mcp23017": "^2.0.0",
+      "ruff-v1-sys-usb": "^0.3.0"
+    }
+  },
+  "engines": {
+    "ruff": ">=1.4.0 <2.0.0"
+  }
+}

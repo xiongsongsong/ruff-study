@@ -26,6 +26,25 @@ var methods = {
         console.log('The "data to append" was appended to file!');
       });
   },
+  sendIr: function (req, res, url) {
+    var params = querystring.parse(req.url.replace(/^.+\?/, ''))
+    try {
+      var data = params.data.split(',').map(function (item) {
+        return parseInt(item, 10)
+      })
+    } catch (e) {
+      res.end(e.toString())
+      return
+    }
+    $('#IR_SENDER').send(data, function (error) {
+      if (error) {
+        res.end('fail')
+      } else {
+        res.end('success')
+      }
+    })
+  },
+
   // 处理静态数据
   static: function (req, res, url) {
     var type = path.extname(url).toLowerCase()
@@ -36,6 +55,9 @@ var methods = {
       case 'html':
         res.writeHead(200, {'Content-Type': 'text/html'})
         break;
+    }
+    if (url === '/') {
+      url = '/index.html'
     }
     var _path = __dirname + url
     fs.exists(_path, function (exists) {
@@ -57,7 +79,9 @@ $.ready(function () {
 
   var server = http.createServer(function (req, res) {
     var url = req.url.replace(/\?.*$/, '').replace(/\.+/, '.');
+
     var api = url.substring(1)
+    console.log(url)
     if (methods[api]) {
       methods[api](req, res, url)
     } else {

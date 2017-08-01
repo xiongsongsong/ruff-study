@@ -12,6 +12,7 @@
   <style>
     h1 {
       text-align: center;
+      font-weight: 100;
     }
 
     body {
@@ -21,6 +22,18 @@
     a[download] {
       color: #1c8de0;
       margin-left: 1em;
+    }
+
+    ul, li {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
   </style>
@@ -35,7 +48,12 @@
 
   <hr>
 
-  <pre>{{ir}}</pre>
+  <ul>
+    <li v-for="item in irList">
+      <el-button @click="sendIr(item)" type="info" size="small">发送</el-button>
+      {{item}}
+    </li>
+  </ul>
 
   <el-dialog :visible.sync="visible" size="tiny">
     <el-form :form="form">
@@ -119,6 +137,29 @@
           self.ir = res.data
         }).catch(function (e) {
           console.log(e)
+        })
+      },
+      sendIr: function (item) {
+        var self = this
+        axios.get('/sendIr', {
+          params: {
+            data: item.replace(/.+?\|/, '').trim()
+          }
+        }).then(function (res) {
+          if (res.data === 'fail') {
+            self.$message.error('发送失败')
+          } else {
+            self.$message.success('发送成功')
+          }
+        }).catch(function (e) {
+          self.$message.error('网络异常')
+        })
+      }
+    },
+    computed: {
+      irList: function () {
+        return this.ir.split(/[\r\n]/).filter(function (item) {
+          return item.trim().length > 0
         })
       }
     },
